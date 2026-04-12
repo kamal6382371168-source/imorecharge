@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0"/>
+<title>LUMINARA – Diamond Reseller</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+<style>
+/* ======================================================
+   CSS VARIABLES & RESET
+====================================================== */
+:root{
+  --gold:#f5c842;
+  --gold2:#ffd700;
+  --gold-dim:#a8860c;
+  --neon:#00d4ff;
+  --neon2:#0099cc;
+  --bg:#060810;
+  --bg2:#0b0f1a;
+  --bg3:#111827;
+  --glass:rgba(255,255,255,0.04);
+  --glass2:rgba(255,255,255,0.08);
+  --border:rgba(245,200,66,0.18);
+  --border2:rgba(0,212,255,0.18);
+  --text:#eef0f5;
+  --text-dim:#8b919e;
+  --danger:#ff4d6d;
+  --success:#00e676;
+  --radius:16px;
+  --radius2:12px;
+  --shadow-gold:0 0 30px rgba(245,200,66,0.25);
+  --shadow-neon:0 0 30px rgba(0,212,255,0.2);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{font-size:16px;scroll-behavior:smooth}
+body{
+  font-family:'Rajdhani',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+  position:relative;
+}
+
+/* ======================================================
+   BACKGROUND PARTICLES / MESH
+====================================================== */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 10%,rgba(245,200,66,0.07) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 80%,rgba(0,212,255,0.07) 0%,transparent 60%),
+    radial-gradient(ellipse 40% 60% at 50% 50%,rgba(11,15,26,0.9) 0%,transparent 100%);
+  pointer-events:none;z-index:0;
+}
+#particles{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden;}
+.particle{
+  position:absolute;
+  width:2px;height:2px;
+  border-radius:50%;
+  background:var(--gold2);
+  opacity:0;
+  animation:float-up linear infinite;
+}
+@keyframes float-up{
+  0%{transform:translateY(100vh) translateX(0);opacity:0}
+  10%{opacity:0.6}
+  90%{opacity:0.2}
+  100%{transform:translateY(-10vh) translateX(60px);opacity:0}
+}
+
+/* ======================================================
+   PAGES
+====================================================== */
+.page{
+  display:none;
+  position:relative;
+  z-index:10;
+  min-height:100vh;
+  animation:fadeIn 0.6s ease;
+}
+.page.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* ======================================================
+   BRAND LOGO
+====================================================== */
+.brand{
+  text-align:center;
+  padding:32px 16px 8px;
+  animation:brandReveal 1.2s cubic-bezier(0.22,1,0.36,1) both;
+}
+@keyframes brandReveal{
+  0%{opacity:0;transform:scale(0.85) translateY(-20px)}
+  100%{opacity:1;transform:scale(1) translateY(0)}
+}
+.brand-title{
+  font-family:'Cinzel Decorative',serif;
+  font-size:clamp(28px,8vw,52px);
+  font-weight:900;
+  letter-spacing:0.15em;
+  background:linear-gradient(135deg,#a07800 0%,#f5c842 30%,#fffbe0 55%,#f5c842 75%,#a07800 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  filter:drop-shadow(0 0 20px rgba(245,200,66,0.55)) drop-shadow(0 0 40px rgba(245,200,66,0.25));
+  text-transform:uppercase;
+}
+.brand-sub{
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(9px,2.5vw,13px);
+  letter-spacing:0.35em;
+  color:var(--neon);
+  text-transform:uppercase;
+  margin-top:4px;
+  opacity:0.75;
+}
+.brand-line{
+  width:120px;height:1px;
+  margin:12px auto 0;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+
+/* ======================================================
+   GLASS CARD
+====================================================== */
+.glass-card{
+  background:var(--glass);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:0 8px 32px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.06);
+  overflow:hidden;
+}
+.glass-card-blue{border-color:var(--border2);box-shadow:0 8px 32px rgba(0,0,0,0.4),var(--shadow-neon),inset 0 1px 0 rgba(0,212,255,0.06);}
+.card-header{
+  padding:16px 20px;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;
+}
+.card-header .icon{
+  width:36px;height:36px;border-radius:10px;
+  background:linear-gradient(135deg,rgba(245,200,66,0.2),rgba(245,200,66,0.05));
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--gold);font-size:14px;
+}
+.card-header h3{
+  font-family:'Orbitron',sans-serif;
+  font-size:13px;letter-spacing:0.1em;color:var(--gold);
+}
+
+/* ======================================================
+   LOGIN PAGE
+====================================================== */
+#loginPage{
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  min-height:100vh;padding:20px;
+}
+.login-box{
+  width:100%;max-width:400px;
+  padding:36px 28px;
+  margin-top:8px;
+}
+.login-diamond{
+  text-align:center;margin-bottom:28px;
+}
+.diamond-icon-wrap{
+  width:72px;height:72px;margin:0 auto 12px;
+  border-radius:50%;
+  background:linear-gradient(135deg,rgba(245,200,66,0.12),rgba(0,212,255,0.08));
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:30px;
+  box-shadow:var(--shadow-gold);
+  animation:pulse-glow 3s ease-in-out infinite;
+}
+@keyframes pulse-glow{
+  0%,100%{box-shadow:0 0 20px rgba(245,200,66,0.3),0 0 40px rgba(245,200,66,0.1)}
+  50%{box-shadow:0 0 35px rgba(245,200,66,0.55),0 0 60px rgba(245,200,66,0.2)}
+}
+.login-diamond p{font-size:13px;color:var(--text-dim);letter-spacing:0.05em;}
+
+/* Form */
+.form-group{margin-bottom:18px;position:relative;}
+.form-group label{
+  display:block;font-size:12px;letter-spacing:0.12em;
+  color:var(--neon);text-transform:uppercase;margin-bottom:8px;
+  font-weight:600;
+}
+.form-group input,.form-group select{
+  width:100%;padding:14px 16px 14px 46px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:var(--radius2);
+  color:var(--text);
+  font-family:'Rajdhani',sans-serif;
+  font-size:15px;font-weight:500;
+  outline:none;
+  transition:border-color 0.3s,box-shadow 0.3s;
+  -webkit-appearance:none;
+}
+.form-group input:focus,.form-group select:focus{
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(245,200,66,0.12);
+}
+.form-group .field-icon{
+  position:absolute;left:15px;bottom:15px;
+  color:var(--text-dim);font-size:14px;
+  pointer-events:none;
+}
+.form-group select{padding-left:46px;cursor:pointer;}
+.form-group select option{background:#1a1f2e;color:var(--text);}
+
+/* Toggle group for login */
+.login-toggle{
+  display:flex;gap:8px;margin-bottom:24px;
+}
+.toggle-btn{
+  flex:1;padding:10px;
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:10px;
+  color:var(--text-dim);
+  font-family:'Rajdhani',sans-serif;
+  font-size:13px;font-weight:600;letter-spacing:0.08em;
+  cursor:pointer;
+  transition:all 0.3s;
+}
+.toggle-btn.active{
+  background:linear-gradient(135deg,rgba(245,200,66,0.18),rgba(245,200,66,0.06));
+  border-color:var(--gold);
+  color:var(--gold);
+  box-shadow:0 0 15px rgba(245,200,66,0.15);
+}
+
+/* Buttons */
+.btn{
+  width:100%;padding:15px;
+  border:none;border-radius:var(--radius2);
+  font-family:'Orbitron',sans-serif;
+  font-size:13px;font-weight:700;letter-spacing:0.12em;
+  cursor:pointer;
+  transition:all 0.3s;
+  position:relative;overflow:hidden;
+  text-transform:uppercase;
+}
+.btn::after{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(rgba(255,255,255,0.12),transparent);
+  opacity:0;transition:opacity 0.3s;
+}
+.btn:hover::after{opacity:1;}
+.btn:active{transform:scale(0.98);}
+.btn-gold{
+  background:linear-gradient(135deg,#a07800,#f5c842,#ffd700);
+  color:#0a0800;
+  box-shadow:0 4px 20px rgba(245,200,66,0.35);
+}
+.btn-gold:hover{box-shadow:0 6px 30px rgba(245,200,66,0.5);transform:translateY(-1px);}
+.btn-neon{
+  background:linear-gradient(135deg,#003d52,#00d4ff);
+  color:#001820;
+  box-shadow:0 4px 20px rgba(0,212,255,0.25);
+}
+.btn-neon:hover{box-shadow:0 6px 30px rgba(0,212,255,0.4);transform:translateY(-1px);}
+.btn-outline{
+  background:transparent;
+  border:1px solid var(--border);
+  color:var(--text-dim);
+}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold);}
+.btn-sm{
+  width:auto;padding:8px 16px;
+  font-size:10px;letter-spacing:0.08em;
+  border-radius:8px;
+}
+.btn-danger{
+  background:linear-gradient(135deg,#7a001a,#ff4d6d);
+  color:#fff;
+  box-shadow:0 4px 20px rgba(255,77,109,0.25);
+}
+
+/* ======================================================
+   DASHBOARD LAYOUT
+====================================================== */
+#dashboardPage{padding-bottom:80px;}
+
+/* Top Nav */
+.top-nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(6,8,16,0.85);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:12px 16px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.top-nav .nav-brand{
+  font-family:'Cinzel Decorative',serif;
+  font-size:18px;font-weight:900;
+  background:linear-gradient(135deg,#f5c842,#fffbe0,#f5c842);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 10px rgba(245,200,66,0.5));
+}
+.nav-right{display:flex;align-items:center;gap:12px;}
+.balance-chip{
+  display:flex;align-items:center;gap:6px;
+  padding:7px 14px;
+  background:linear-gradient(135deg,rgba(245,200,66,0.12),rgba(245,200,66,0.04));
+  border:1px solid var(--border);
+  border-radius:20px;
+  font-family:'Orbitron',sans-serif;
+  font-size:11px;color:var(--gold);
+  white-space:nowrap;
+}
+.logout-btn{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,0.08);
+  color:var(--text-dim);font-size:14px;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all 0.3s;
+}
+.logout-btn:hover{border-color:var(--danger);color:var(--danger);}
+
+/* Section */
+.section{padding:20px 16px;}
+.section-title{
+  font-family:'Orbitron',sans-serif;
+  font-size:11px;letter-spacing:0.2em;
+  color:var(--text-dim);text-transform:uppercase;
+  margin-bottom:14px;
+  display:flex;align-items:center;gap:8px;
+}
+.section-title::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,var(--border),transparent);
+}
+
+/* Greeting */
+.greeting-bar{
+  margin:20px 16px 0;
+  padding:18px 20px;
+  background:linear-gradient(135deg,rgba(245,200,66,0.08),rgba(0,212,255,0.04));
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:10px;
+}
+.greeting-text h2{
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(13px,3.5vw,17px);
+  color:var(--gold);
+}
+.greeting-text p{font-size:12px;color:var(--text-dim);margin-top:3px;}
+.balance-display{text-align:right;}
+.balance-display .label{font-size:10px;color:var(--text-dim);letter-spacing:0.1em;text-transform:uppercase;}
+.balance-display .amount{
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(18px,5vw,26px);
+  color:var(--gold2);
+  filter:drop-shadow(0 0 10px rgba(255,215,0,0.4));
+}
+.balance-display .unit{font-size:11px;color:var(--neon);margin-left:4px;}
+
+/* Package Grid */
+.pkg-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+@media(min-width:500px){.pkg-grid{grid-template-columns:repeat(4,1fr);}}
+@media(min-width:700px){.pkg-grid{grid-template-columns:repeat(6,1fr);}}
+.pkg-card{
+  padding:14px 8px;
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,0.07);
+  border-radius:var(--radius2);
+  text-align:center;cursor:pointer;
+  transition:all 0.3s;
+}
+.pkg-card:hover,.pkg-card.selected{
+  background:linear-gradient(135deg,rgba(245,200,66,0.14),rgba(245,200,66,0.04));
+  border-color:var(--gold);
+  box-shadow:0 0 20px rgba(245,200,66,0.2);
+  transform:translateY(-2px);
+}
+.pkg-card .pkg-icon{font-size:20px;margin-bottom:5px;}
+.pkg-card .pkg-amt{
+  font-family:'Orbitron',sans-serif;
+  font-size:12px;color:var(--gold);font-weight:700;
+}
+.pkg-card .pkg-label{font-size:10px;color:var(--text-dim);margin-top:2px;}
+
+/* Custom qty */
+.custom-qty-wrap{margin-top:12px;}
+.qty-row{display:flex;align-items:center;gap:10px;}
+.qty-btn{
+  width:38px;height:38px;border-radius:50%;
+  background:var(--glass);
+  border:1px solid var(--border);
+  color:var(--gold);font-size:18px;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all 0.3s;flex-shrink:0;
+}
+.qty-btn:hover{background:rgba(245,200,66,0.1);border-color:var(--gold);}
+.qty-input{
+  flex:1;text-align:center;
+  background:var(--glass);
+  border:1px solid var(--border);
+  border-radius:10px;
+  color:var(--gold2);
+  font-family:'Orbitron',sans-serif;
+  font-size:18px;font-weight:700;
+  padding:10px;outline:none;
+}
+
+/* Selected summary */
+.order-summary{
+  margin-top:16px;padding:16px;
+  background:linear-gradient(135deg,rgba(0,212,255,0.06),rgba(0,212,255,0.02));
+  border:1px solid var(--border2);
+  border-radius:var(--radius2);
+}
+.summary-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);
+  font-size:13px;
+}
+.summary-row:last-child{border-bottom:none;}
+.summary-row .s-label{color:var(--text-dim);}
+.summary-row .s-val{color:var(--text);font-weight:600;}
+.summary-row .s-val.highlight{color:var(--gold);font-family:'Orbitron',sans-serif;}
+
+/* Bottom Nav */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;z-index:100;
+  background:rgba(6,8,16,0.92);
+  backdrop-filter:blur(20px);
+  border-top:1px solid var(--border);
+  display:flex;
+}
+.bnav-item{
+  flex:1;padding:12px 0;
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  cursor:pointer;
+  color:var(--text-dim);font-size:10px;letter-spacing:0.06em;
+  font-family:'Orbitron',sans-serif;
+  transition:color 0.3s;
+  border:none;background:transparent;
+}
+.bnav-item .bni{font-size:18px;transition:transform 0.3s;}
+.bnav-item.active,.bnav-item:hover{color:var(--gold);}
+.bnav-item.active .bni{transform:scale(1.15);}
+
+/* ======================================================
+   HISTORY PAGE
+====================================================== */
+#historySection{padding:16px;}
+.history-item{
+  padding:16px;margin-bottom:10px;
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,0.06);
+  border-radius:var(--radius2);
+  transition:all 0.3s;
+  cursor:pointer;
+}
+.history-item:hover{border-color:var(--neon);box-shadow:var(--shadow-neon);}
+.history-item .hi-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.history-item .hi-id{font-family:'Orbitron',sans-serif;font-size:12px;color:var(--neon);}
+.status-badge{
+  padding:3px 10px;border-radius:20px;
+  font-size:10px;letter-spacing:0.08em;font-weight:600;
+  font-family:'Orbitron',sans-serif;
+}
+.status-success{background:rgba(0,230,118,0.12);border:1px solid rgba(0,230,118,0.3);color:var(--success);}
+.status-pending{background:rgba(255,170,0,0.12);border:1px solid rgba(255,170,0,0.3);color:#ffaa00;}
+.history-item .hi-bottom{display:flex;justify-content:space-between;align-items:center;}
+.hi-diamonds{
+  font-family:'Orbitron',sans-serif;font-size:16px;font-weight:700;
+  color:var(--gold);
+}
+.hi-date{font-size:11px;color:var(--text-dim);}
+
+/* ======================================================
+   RECEIPT MODAL
+====================================================== */
+.modal-overlay{
+  display:none;
+  position:fixed;inset:0;
+  background:rgba(0,0,0,0.75);
+  backdrop-filter:blur(8px);
+  z-index:999;
+  align-items:center;justify-content:center;
+  padding:20px;
+}
+.modal-overlay.open{display:flex;}
+.modal{
+  width:100%;max-width:420px;
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:0;
+  box-shadow:0 20px 60px rgba(0,0,0,0.7),0 0 40px rgba(245,200,66,0.1);
+  animation:modalIn 0.4s cubic-bezier(0.22,1,0.36,1);
+  overflow:hidden;
+  max-height:90vh;
+  overflow-y:auto;
+}
+@keyframes modalIn{
+  from{opacity:0;transform:scale(0.88) translateY(20px)}
+  to{opacity:1;transform:scale(1) translateY(0)}
+}
+.modal-head{
+  padding:20px 24px 16px;
+  background:linear-gradient(135deg,rgba(245,200,66,0.1),rgba(0,212,255,0.05));
+  border-bottom:1px solid var(--border);
+  text-align:center;
+}
+.modal-head h3{
+  font-family:'Cinzel Decorative',serif;
+  font-size:18px;color:var(--gold);
+  filter:drop-shadow(0 0 10px rgba(245,200,66,0.4));
+}
+.modal-head p{font-size:12px;color:var(--text-dim);margin-top:4px;}
+.modal-body{padding:20px 24px;}
+.modal-foot{
+  padding:16px 24px 20px;
+  display:flex;gap:10px;
+}
+.receipt-logo{
+  font-family:'Cinzel Decorative',serif;
+  font-size:22px;
+  background:linear-gradient(135deg,#f5c842,#fffbe0);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 15px rgba(245,200,66,0.5));
+}
+.receipt-divider{
+  border:none;
+  border-top:1px dashed rgba(255,255,255,0.1);
+  margin:14px 0;
+}
+.receipt-row{
+  display:flex;justify-content:space-between;
+  padding:7px 0;font-size:13px;
+  border-bottom:1px solid rgba(255,255,255,0.04);
+}
+.receipt-row:last-child{border-bottom:none;}
+.receipt-row .r-key{color:var(--text-dim);}
+.receipt-row .r-val{color:var(--text);font-weight:600;text-align:right;max-width:60%;word-break:break-all;}
+.receipt-total{
+  margin-top:12px;padding:14px 16px;
+  background:linear-gradient(135deg,rgba(245,200,66,0.1),rgba(245,200,66,0.03));
+  border:1px solid var(--border);
+  border-radius:10px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.receipt-total .t-label{color:var(--text-dim);font-size:12px;}
+.receipt-total .t-val{
+  font-family:'Orbitron',sans-serif;
+  font-size:22px;color:var(--gold2);
+  filter:drop-shadow(0 0 8px rgba(255,215,0,0.4));
+}
+
+/* PIN Modal */
+.pin-input{
+  display:flex;gap:8px;justify-content:center;margin:16px 0;
+}
+.pin-digit{
+  width:52px;height:58px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:10px;
+  text-align:center;
+  color:var(--gold2);
+  font-family:'Orbitron',sans-serif;
+  font-size:22px;font-weight:700;
+  outline:none;caret-color:var(--gold);
+  transition:border-color 0.3s,box-shadow 0.3s;
+}
+.pin-digit:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(245,200,66,0.15);}
+
+/* ======================================================
+   ADMIN PAGE
+====================================================== */
+#adminPage{padding-bottom:30px;}
+.admin-header{
+  padding:20px 16px 0;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:10px;
+}
+.admin-title{
+  font-family:'Cinzel Decorative',serif;
+  font-size:20px;color:var(--gold);
+  filter:drop-shadow(0 0 12px rgba(245,200,66,0.4));
+}
+.admin-stats{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:12px;
+  padding:16px;
+}
+@media(min-width:500px){.admin-stats{grid-template-columns:repeat(4,1fr);}}
+.stat-card{
+  padding:16px;
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,0.07);
+  border-radius:var(--radius2);
+  text-align:center;
+}
+.stat-card .stat-icon{font-size:22px;margin-bottom:6px;}
+.stat-card .stat-num{
+  font-family:'Orbitron',sans-serif;
+  font-size:18px;font-weight:700;color:var(--gold);
+}
+.stat-card .stat-label{font-size:10px;color:var(--text-dim);margin-top:3px;}
+
+/* Search bar */
+.search-bar{
+  display:flex;gap:10px;
+  padding:0 16px 16px;
+}
+.search-input{
+  flex:1;padding:12px 16px 12px 44px;
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:var(--radius2);
+  color:var(--text);
+  font-family:'Rajdhani',sans-serif;
+  font-size:15px;outline:none;
+  transition:border-color 0.3s;
+}
+.search-input:focus{border-color:var(--gold);}
+.search-wrap{flex:1;position:relative;}
+.search-wrap .search-icon{
+  position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  color:var(--text-dim);font-size:14px;pointer-events:none;
+}
+
+/* Sellers table */
+.sellers-wrap{padding:0 16px;}
+.seller-row{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 16px;margin-bottom:8px;
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,0.06);
+  border-radius:var(--radius2);
+  transition:all 0.3s;
+  flex-wrap:wrap;
+}
+.seller-row:hover{border-color:var(--border);box-shadow:var(--shadow-gold);}
+.seller-avatar{
+  width:42px;height:42px;border-radius:50%;
+  background:linear-gradient(135deg,rgba(245,200,66,0.2),rgba(0,212,255,0.1));
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;flex-shrink:0;
+}
+.seller-info{flex:1;min-width:0;}
+.seller-name{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.seller-mobile{font-size:11px;color:var(--text-dim);font-family:'Orbitron',sans-serif;}
+.seller-balance{
+  font-family:'Orbitron',sans-serif;
+  font-size:14px;font-weight:700;color:var(--gold);
+  white-space:nowrap;
+}
+.seller-actions{display:flex;gap:6px;flex-shrink:0;}
+
+/* Add Balance modal */
+.add-bal-row{
+  display:flex;align-items:center;gap:12px;
+  padding:14px;margin-bottom:16px;
+  background:var(--glass);
+  border:1px solid var(--border);
+  border-radius:var(--radius2);
+}
+
+/* ======================================================
+   LOADING SPINNER
+====================================================== */
+.spinner-overlay{
+  display:none;
+  position:fixed;inset:0;
+  background:rgba(6,8,16,0.8);
+  z-index:9999;
+  align-items:center;justify-content:center;
+  flex-direction:column;gap:16px;
+}
+.spinner-overlay.show{display:flex;}
+.spinner{
+  width:52px;height:52px;
+  border:3px solid rgba(245,200,66,0.1);
+  border-top-color:var(--gold);
+  border-radius:50%;
+  animation:spin 0.8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinner-text{
+  font-family:'Orbitron',sans-serif;
+  font-size:11px;letter-spacing:0.15em;color:var(--gold);
+}
+
+/* Toast */
+.toast{
+  position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);
+  padding:12px 22px;
+  background:rgba(11,15,26,0.95);
+  border-radius:30px;
+  font-size:13px;font-weight:600;
+  opacity:0;transition:all 0.4s;z-index:9998;
+  white-space:nowrap;
+  border:1px solid var(--border);
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.toast.success{border-color:rgba(0,230,118,0.3);color:var(--success);}
+.toast.error{border-color:rgba(255,77,109,0.3);color:var(--danger);}
+.toast.info{border-color:var(--border);color:var(--gold);}
+
+/* ======================================================
+   RESPONSIVE
+====================================================== */
+@media(max-width:380px){
+  .pkg-grid{grid-template-columns:repeat(2,1fr);}
+  .pin-digit{width:44px;height:52px;font-size:18px;}
+  .admin-stats{grid-template-columns:repeat(2,1fr);}
+}
+.no-orders{
+  text-align:center;padding:40px 20px;
+  color:var(--text-dim);
+}
+.no-orders i{font-size:40px;color:rgba(245,200,66,0.2);margin-bottom:12px;}
+.no-orders p{font-size:13px;}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:4px;height:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:rgba(245,200,66,0.2);border-radius:2px;}
+::-webkit-scrollbar-thumb:hover{background:rgba(245,200,66,0.4);}
+
+/* Tabs inside dashboard */
+.dash-tab-content{display:none;}
+.dash-tab-content.active{display:block;}
+</style>
+</head>
+<body>
+
+<!-- ===================================================
+     BACKGROUND PARTICLES
+=================================================== -->
+<div id="particles"></div>
+
+<!-- ===================================================
+     SPINNER
+=================================================== -->
+<div class="spinner-overlay" id="spinner">
+  <div class="spinner"></div>
+  <div class="spinner-text">Processing...</div>
+</div>
+
+<!-- ===================================================
+     TOAST
+=================================================== -->
+<div class="toast" id="toast"></div>
+
+<!-- ===================================================
+  PAGE 1: LOGIN
+=================================================== -->
+<div class="page active" id="loginPage">
+  <div class="brand">
+    <div class="brand-title">LUMINARA</div>
+    <div class="brand-sub">Diamond Reseller Network</div>
+    <div class="brand-line"></div>
+  </div>
+
+  <div style="display:flex;justify-content:center;padding:0 16px;">
+    <div class="glass-card login-box">
+      <div class="login-diamond">
+        <div class="diamond-icon-wrap">💎</div>
+        <p>Sign in to your account</p>
+      </div>
+
+      <!-- Toggle Seller / Admin -->
+      <div class="login-toggle">
+        <button class="toggle-btn active" onclick="switchLoginMode('seller')" id="sellerToggle">
+          <i class="fas fa-user-tie"></i> Seller
+        </button>
+        <button class="toggle-btn" onclick="switchLoginMode('admin')" id="adminToggle">
+          <i class="fas fa-shield-alt"></i> Admin
+        </button>
+      </div>
+
+      <!-- Seller Login -->
+      <div id="sellerLoginForm">
+        <div class="form-group">
+          <label>Mobile Number</label>
+          <i class="fas fa-mobile-alt field-icon"></i>
+          <input type="tel" id="loginMobile" placeholder="Enter mobile number" inputmode="numeric"/>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <i class="fas fa-lock field-icon"></i>
+          <input type="password" id="loginPassword" placeholder="Enter password"/>
+        </div>
+        <button class="btn btn-gold" onclick="doSellerLogin()">
+          <i class="fas fa-sign-in-alt"></i> &nbsp;Sign In
+        </button>
+      </div>
+
+      <!-- Admin Login -->
+      <div id="adminLoginForm" style="display:none;">
+        <div class="form-group">
+          <label>Admin Key</label>
+          <i class="fas fa-key field-icon"></i>
+          <input type="password" id="loginAdminKey" placeholder="Enter admin key"/>
+        </div>
+        <button class="btn btn-neon" onclick="doAdminLogin()">
+          <i class="fas fa-user-shield"></i> &nbsp;Admin Access
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================
+  PAGE 2: SELLER DASHBOARD
+=================================================== -->
+<div class="page" id="dashboardPage">
+  <!-- Top Nav -->
+  <div class="top-nav">
+    <div class="nav-brand">LUMINARA</div>
+    <div class="nav-right">
+      <div class="balance-chip">
+        💎 <span id="navBalance">0</span>
+      </div>
+      <button class="logout-btn" onclick="doLogout()" title="Logout">
+        <i class="fas fa-sign-out-alt"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Greeting -->
+  <div class="greeting-bar">
+    <div class="greeting-text">
+      <h2>Welcome, <span id="sellerNameDisplay">Seller</span></h2>
+      <p>💎 Ready to send diamonds</p>
+    </div>
+    <div class="balance-display">
+      <div class="label">Balance</div>
+      <div class="amount"><span id="balanceDisplay">0</span><span class="unit">💎</span></div>
+    </div>
+  </div>
+
+  <!-- TAB CONTENTS -->
+  <div id="tabOrder" class="dash-tab-content active">
+
+    <!-- Step 1: Player ID -->
+    <div class="section">
+      <div class="section-title">Player Details</div>
+      <div class="glass-card">
+        <div class="card-header">
+          <div class="icon"><i class="fas fa-gamepad"></i></div>
+          <h3>Customer Info</h3>
+        </div>
+        <div style="padding:16px;">
+          <div class="form-group">
+            <label>Player / Customer ID</label>
+            <i class="fas fa-id-badge field-icon"></i>
+            <input type="text" id="customerID" placeholder="Enter Player ID"/>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Diamond Package -->
+    <div class="section" style="padding-top:0">
+      <div class="section-title">Select Package</div>
+      <div class="pkg-grid" id="pkgGrid">
+        <!-- Packages injected by JS -->
+      </div>
+
+      <!-- Custom Qty -->
+      <div class="custom-qty-wrap">
+        <div class="section-title" style="margin-top:16px;">Custom Amount</div>
+        <div class="qty-row">
+          <button class="qty-btn" onclick="changeQty(-10)"><i class="fas fa-minus"></i></button>
+          <input type="number" class="qty-input" id="customQty" value="10" min="10" max="10000"
+                 oninput="onQtyInput()" inputmode="numeric"/>
+          <button class="qty-btn" onclick="changeQty(10)"><i class="fas fa-plus"></i></button>
+        </div>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="order-summary" style="margin-top:16px;">
+        <div class="summary-row">
+          <span class="s-label">Selected Player</span>
+          <span class="s-val" id="sumPlayer">—</span>
+        </div>
+        <div class="summary-row">
+          <span class="s-label">Diamond Amount</span>
+          <span class="s-val highlight" id="sumAmount">10 💎</span>
+        </div>
+        <div class="summary-row">
+          <span class="s-label">Current Balance</span>
+          <span class="s-val" id="sumBalance">0 💎</span>
+        </div>
+        <div class="summary-row">
+          <span class="s-label">Balance After</span>
+          <span class="s-val" id="sumAfter">0 💎</span>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;">
+        <button class="btn btn-gold" onclick="initiateOrder()">
+          <i class="fas fa-paper-plane"></i> &nbsp;Place Order
+        </button>
+      </div>
+    </div>
+
+  </div><!-- /tabOrder -->
+
+  <!-- HISTORY TAB -->
+  <div id="tabHistory" class="dash-tab-content">
+    <div style="padding:16px 16px 0;display:flex;align-items:center;justify-content:space-between;">
+      <div class="section-title" style="margin-bottom:0;">Order History</div>
+      <button class="btn btn-outline btn-sm" onclick="loadHistory()">
+        <i class="fas fa-sync-alt"></i> Refresh
+      </button>
+    </div>
+    <div id="historySection">
+      <div class="no-orders">
+        <i class="fas fa-history"></i>
+        <p>No orders yet</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Nav -->
+  <div class="bottom-nav">
+    <button class="bnav-item active" id="bnOrder" onclick="switchTab('order')">
+      <span class="bni">💎</span>
+      Order
+    </button>
+    <button class="bnav-item" id="bnHistory" onclick="switchTab('history')">
+      <span class="bni"><i class="fas fa-clock"></i></span>
+      History
+    </button>
+  </div>
+</div>
+
+<!-- ===================================================
+  PAGE 3: ADMIN DASHBOARD
+=================================================== -->
+<div class="page" id="adminPage">
+  <div class="top-nav">
+    <div class="nav-brand">LUMINARA</div>
+    <button class="logout-btn" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i></button>
+  </div>
+
+  <div class="admin-header">
+    <div class="admin-title">Admin Dashboard</div>
+    <div style="font-size:12px;color:var(--neon);font-family:'Orbitron',sans-serif;">
+      <i class="fas fa-shield-alt"></i> Authorized
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="admin-stats" id="adminStats">
+    <div class="stat-card">
+      <div class="stat-icon">👥</div>
+      <div class="stat-num" id="statSellers">—</div>
+      <div class="stat-label">Sellers</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">📦</div>
+      <div class="stat-num" id="statOrders">—</div>
+      <div class="stat-label">Total Orders</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">💎</div>
+      <div class="stat-num" id="statDiamonds">—</div>
+      <div class="stat-label">Diamonds Sent</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">💰</div>
+      <div class="stat-num" id="statTotalBal">—</div>
+      <div class="stat-label">Total Balance</div>
+    </div>
+  </div>
+
+  <!-- Wallet Management -->
+  <div style="padding:0 16px;">
+    <div class="section-title">Wallet Management</div>
+
+    <!-- Search only by mobile -->
+    <div style="position:relative;margin-bottom:16px;">
+      <i class="fas fa-search" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text-dim);font-size:14px;pointer-events:none;"></i>
+      <input type="tel" class="search-input" id="adminSearch" inputmode="numeric"
+             placeholder="Search by mobile number..."
+             oninput="filterSellers()"
+             style="padding-left:44px;width:100%;"/>
+    </div>
+
+    <div id="sellersList">
+      <!-- Sellers rendered by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================
+  MODAL: Transaction PIN
+=================================================== -->
+<div class="modal-overlay" id="pinModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>🔐 Confirm Order</h3>
+      <p>Enter your 4-digit Transaction PIN</p>
+    </div>
+    <div class="modal-body">
+      <div style="text-align:center;margin-bottom:12px;">
+        <div style="font-size:12px;color:var(--text-dim);">Sending <strong style="color:var(--gold)" id="pinModalAmt">0</strong> 💎 to <strong style="color:var(--neon)" id="pinModalId">—</strong></div>
+      </div>
+      <div class="pin-input">
+        <input class="pin-digit" type="password" maxlength="1" inputmode="numeric" id="p1"/>
+        <input class="pin-digit" type="password" maxlength="1" inputmode="numeric" id="p2"/>
+        <input class="pin-digit" type="password" maxlength="1" inputmode="numeric" id="p3"/>
+        <input class="pin-digit" type="password" maxlength="1" inputmode="numeric" id="p4"/>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-outline" onclick="closePinModal()">Cancel</button>
+      <button class="btn btn-gold" onclick="submitOrder()">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================
+  MODAL: Receipt
+=================================================== -->
+<div class="modal-overlay" id="receiptModal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="receipt-logo">LUMINARA</div>
+      <p style="font-size:11px;color:var(--text-dim);margin-top:4px;letter-spacing:0.08em;">OFFICIAL DIAMOND RECEIPT</p>
+    </div>
+    <div class="modal-body" id="receiptBody">
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-outline" onclick="closeReceiptModal()">Close</button>
+      <button class="btn btn-gold" onclick="switchTab('history');closeReceiptModal();">View History</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================
+  MODAL: Add Balance (Admin)
+=================================================== -->
+<div class="modal-overlay" id="addBalModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>💎 Add Diamonds</h3>
+      <p id="addBalSubtitle">Update seller balance</p>
+    </div>
+    <div class="modal-body">
+      <div class="add-bal-row">
+        <div class="seller-avatar">👤</div>
+        <div style="flex:1;">
+          <div style="font-weight:600;font-size:14px;" id="addBalName">—</div>
+          <div style="font-size:11px;color:var(--text-dim);font-family:'Orbitron',sans-serif;" id="addBalMobile">—</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:10px;color:var(--text-dim);">Current</div>
+          <div style="font-family:'Orbitron',sans-serif;font-size:16px;color:var(--gold);" id="addBalCurrent">0</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Diamonds to Add</label>
+        <i class="fas fa-gem field-icon"></i>
+        <input type="number" id="addBalAmt" placeholder="Enter amount to add"
+               inputmode="numeric" oninput="updateAddBalPreview()"/>
+      </div>
+      <div style="padding:12px 16px;background:var(--glass);border:1px solid var(--border);border-radius:10px;display:flex;justify-content:space-between;margin-top:4px;">
+        <span style="font-size:12px;color:var(--text-dim);">New Balance</span>
+        <span style="font-family:'Orbitron',sans-serif;font-size:16px;color:var(--gold2);" id="addBalPreview">—</span>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-outline" onclick="closeAddBalModal()">Cancel</button>
+      <button class="btn btn-gold" onclick="submitAddBalance()">Update Balance</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================
+  MODAL: History Detail Receipt
+=================================================== -->
+<div class="modal-overlay" id="histDetailModal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="receipt-logo">LUMINARA</div>
+      <p style="font-size:11px;color:var(--text-dim);margin-top:4px;">TRANSACTION RECORD</p>
+    </div>
+    <div class="modal-body" id="histDetailBody"></div>
+    <div class="modal-foot">
+      <button class="btn btn-gold" onclick="document.getElementById('histDetailModal').classList.remove('open')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================
+  JAVASCRIPT
+=================================================== -->
+<script>
+// ============================================================
+// CONFIG
+// ============================================================
+const API_URL = "https://script.google.com/macros/s/AKfycbyUfLTCnYG_-xlkHTX0w1A1J5CYewPb_kQ4FLhBeIUfBo0BQyiwsXtommuxtpu8IsaD/exec";
+
+const PACKAGES = [
+  {amt:10,  label:"Starter", icon:"💎"},
+  {amt:50,  label:"Basic",   icon:"💎"},
+  {amt:100, label:"Bronze",  icon:"💎"},
+  {amt:250, label:"Silver",  icon:"💎"},
+  {amt:500, label:"Gold",    icon:"💎"},
+  {amt:1000,label:"Platinum",icon:"💎"},
+  {amt:2000,label:"Diamond", icon:"💎"},
+  {amt:5000,label:"Elite",   icon:"💎"},
+  {amt:10000,label:"Legend", icon:"💎"},
+];
+
+// ============================================================
+// STATE
+// ============================================================
+let currentUser  = null; // {name, mobile, balance}
+let selectedQty  = 10;
+let adminSellers = [];
+let currentAddBalMobile = null;
+
+// ============================================================
+// INIT
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+  buildParticles();
+  buildPackages();
+  setupPinInputs();
+  updateSummary();
+});
+
+function buildParticles(){
+  const container = document.getElementById('particles');
+  for(let i=0;i<25;i++){
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random()*100+'%';
+    p.style.animationDuration = (8+Math.random()*14)+'s';
+    p.style.animationDelay = (Math.random()*12)+'s';
+    p.style.width = p.style.height = (1+Math.random()*2.5)+'px';
+    p.style.background = Math.random()>0.5 ? 'var(--gold2)' : 'var(--neon)';
+    container.appendChild(p);
+  }
+}
+
+function buildPackages(){
+  const grid = document.getElementById('pkgGrid');
+  grid.innerHTML = '';
+  PACKAGES.forEach(pkg => {
+    const el = document.createElement('div');
+    el.className = 'pkg-card';
+    el.dataset.amt = pkg.amt;
+    el.innerHTML = `<div class="pkg-icon">${pkg.icon}</div>
+                    <div class="pkg-amt">${pkg.amt}</div>
+                    <div class="pkg-label">${pkg.label}</div>`;
+    el.onclick = () => selectPackage(pkg.amt, el);
+    grid.appendChild(el);
+  });
+}
+
+// ============================================================
+// LOGIN
+// ============================================================
+function switchLoginMode(mode){
+  const sf = document.getElementById('sellerLoginForm');
+  const af = document.getElementById('adminLoginForm');
+  document.getElementById('sellerToggle').classList.toggle('active', mode==='seller');
+  document.getElementById('adminToggle').classList.toggle('active', mode==='admin');
+  sf.style.display = mode==='seller' ? 'block' : 'none';
+  af.style.display = mode==='admin'  ? 'block' : 'none';
+}
+
+async function doSellerLogin(){
+  const mobile   = val('loginMobile');
+  const password = val('loginPassword');
+  if(!mobile || !password){ showToast('Please enter mobile and password','error'); return; }
+  showSpinner();
+  try{
+    const res = await apiCall({action:'login', mobile, password});
+    if(res.status === 'success'){
+      currentUser = {name: res.name, mobile, balance: res.balance};
+      setPage('dashboardPage');
+      refreshBalanceUI();
+      showToast('Welcome back, '+res.name+'! 💎','success');
+    } else {
+      showToast(res.message || 'Login failed','error');
+    }
+  }catch(e){ showToast('Connection error. Try again.','error'); }
+  hideSpinner();
+}
+
+async function doAdminLogin(){
+  const adminKey = val('loginAdminKey');
+  if(!adminKey){ showToast('Enter admin key','error'); return; }
+  showSpinner();
+  try{
+    const res = await apiCall({action:'adminLogin', adminKey});
+    if(res.status === 'success'){
+      setPage('adminPage');
+      loadAdminData();
+      showToast('Admin access granted 🔐','success');
+    } else {
+      showToast(res.message || 'Invalid admin key','error');
+    }
+  }catch(e){ showToast('Connection error','error'); }
+  hideSpinner();
+}
+
+function doLogout(){
+  currentUser = null;
+  document.getElementById('loginMobile').value = '';
+  document.getElementById('loginPassword').value = '';
+  document.getElementById('loginAdminKey').value = '';
+  setPage('loginPage');
+  switchTab('order');
+  showToast('Logged out','info');
+}
+
+// ============================================================
+// DASHBOARD
+// ============================================================
+function refreshBalanceUI(){
+  if(!currentUser) return;
+  document.getElementById('sellerNameDisplay').textContent = currentUser.name;
+  document.getElementById('balanceDisplay').textContent = currentUser.balance.toLocaleString();
+  document.getElementById('navBalance').textContent = currentUser.balance.toLocaleString();
+  updateSummary();
+}
+
+function switchTab(tab){
+  document.getElementById('tabOrder').classList.toggle('active', tab==='order');
+  document.getElementById('tabHistory').classList.toggle('active', tab==='history');
+  document.getElementById('bnOrder').classList.toggle('active', tab==='order');
+  document.getElementById('bnHistory').classList.toggle('active', tab==='history');
+  if(tab==='history') loadHistory();
+}
+
+// ============================================================
+// PACKAGES / QTY
+// ============================================================
+function selectPackage(amt, el){
+  document.querySelectorAll('.pkg-card').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedQty = amt;
+  document.getElementById('customQty').value = amt;
+  updateSummary();
+}
+
+function changeQty(delta){
+  let v = parseInt(document.getElementById('customQty').value)||10;
+  v = Math.min(10000, Math.max(10, v+delta));
+  document.getElementById('customQty').value = v;
+  selectedQty = v;
+  // deselect packages
+  document.querySelectorAll('.pkg-card').forEach(c=>{
+    c.classList.toggle('selected', parseInt(c.dataset.amt)===v);
+  });
+  updateSummary();
+}
+
+function onQtyInput(){
+  let v = parseInt(document.getElementById('customQty').value)||10;
+  v = Math.min(10000, Math.max(10, v));
+  selectedQty = v;
+  document.querySelectorAll('.pkg-card').forEach(c=>{
+    c.classList.toggle('selected', parseInt(c.dataset.amt)===v);
+  });
+  updateSummary();
+}
+
+function updateSummary(){
+  const player  = val('customerID') || '—';
+  const balance = currentUser ? currentUser.balance : 0;
+  const after   = Math.max(0, balance - selectedQty);
+  document.getElementById('sumPlayer').textContent  = player;
+  document.getElementById('sumAmount').textContent  = selectedQty.toLocaleString()+' 💎';
+  document.getElementById('sumBalance').textContent = balance.toLocaleString()+' 💎';
+  document.getElementById('sumAfter').textContent   = after.toLocaleString()+' 💎';
+  document.getElementById('sumAfter').style.color   = after < 0 ? 'var(--danger)' : 'var(--text)';
+}
+
+document.addEventListener('input', e => {
+  if(e.target.id === 'customerID') updateSummary();
+});
+
+// ============================================================
+// ORDER FLOW
+// ============================================================
+function initiateOrder(){
+  const playerID = val('customerID');
+  if(!playerID){ showToast('Enter Customer / Player ID first','error'); return; }
+  if(selectedQty < 10){ showToast('Minimum order is 10 diamonds','error'); return; }
+  if(currentUser && currentUser.balance < selectedQty){
+    showToast('Insufficient balance! Top up required.','error'); return;
+  }
+  // Show PIN modal
+  document.getElementById('pinModalAmt').textContent = selectedQty.toLocaleString();
+  document.getElementById('pinModalId').textContent  = playerID;
+  clearPinInputs();
+  document.getElementById('pinModal').classList.add('open');
+  setTimeout(()=>document.getElementById('p1').focus(),300);
+}
+
+async function submitOrder(){
+  const pin = getPIN();
+  if(pin.length < 4){ showToast('Enter complete 4-digit PIN','error'); return; }
+  closePinModal();
+  showSpinner();
+  try{
+    const res = await apiCall({
+      action         : 'addOrder',
+      mobile         : currentUser.mobile,
+      transactionPin : pin,
+      customerID     : val('customerID'),
+      diamondAmount  : selectedQty
+    });
+    if(res.status === 'success'){
+      currentUser.balance = res.newBalance;
+      refreshBalanceUI();
+      showReceipt(res);
+    } else {
+      showToast(res.message || 'Order failed','error');
+    }
+  }catch(e){ showToast('Connection error','error'); }
+  hideSpinner();
+}
+
+function showReceipt(res){
+  const body = document.getElementById('receiptBody');
+  body.innerHTML = `
+    <div style="text-align:center;margin-bottom:16px;">
+      <div style="font-size:48px;animation:pulse-glow 2s infinite;">✅</div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:14px;color:var(--success);margin-top:8px;">Order Successful!</div>
+    </div>
+    <div class="receipt-row"><span class="r-key">Seller</span><span class="r-val">${res.sellerName}</span></div>
+    <div class="receipt-row"><span class="r-key">Customer ID</span><span class="r-val">${res.customerID}</span></div>
+    <div class="receipt-row"><span class="r-key">Status</span><span class="r-val"><span class="status-badge status-success">SUCCESS</span></span></div>
+    <div class="receipt-row"><span class="r-key">Timestamp</span><span class="r-val">${res.timestamp}</span></div>
+    <hr class="receipt-divider"/>
+    <div class="receipt-total">
+      <div class="t-label">Diamonds Sent</div>
+      <div class="t-val">${res.diamonds.toLocaleString()} 💎</div>
+    </div>
+    <div style="margin-top:10px;padding:10px 14px;background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.15);border-radius:8px;display:flex;justify-content:space-between;">
+      <span style="font-size:12px;color:var(--text-dim);">Remaining Balance</span>
+      <span style="font-family:'Orbitron',sans-serif;font-size:14px;color:var(--neon);">${res.newBalance.toLocaleString()} 💎</span>
+    </div>`;
+  document.getElementById('receiptModal').classList.add('open');
+  document.getElementById('customerID').value = '';
+  updateSummary();
+}
+
+// ============================================================
+// HISTORY
+// ============================================================
+async function loadHistory(){
+  if(!currentUser) return;
+  showSpinner();
+  try{
+    const res = await apiCall({action:'getHistory', mobile: currentUser.mobile});
+    hideSpinner();
+    const section = document.getElementById('historySection');
+    if(res.status==='success' && res.history && res.history.length > 0){
+      section.innerHTML = res.history.slice().reverse().map(h=>`
+        <div class="history-item" onclick="showHistDetail(${JSON.stringify(h).replace(/"/g,'&quot;')})">
+          <div class="hi-top">
+            <div class="hi-id">🆔 ${h.customerID}</div>
+            <div class="status-badge ${h.orderStatus.toLowerCase()==='success'?'status-success':'status-pending'}">${h.orderStatus.toUpperCase()}</div>
+          </div>
+          <div class="hi-bottom">
+            <div class="hi-diamonds">+${parseInt(h.diamondAmount).toLocaleString()} 💎</div>
+            <div class="hi-date">${h.dateTime}</div>
+          </div>
+        </div>`).join('');
+    } else {
+      section.innerHTML = `<div class="no-orders"><i class="fas fa-history"></i><p>No orders found.</p></div>`;
+    }
+  }catch(e){
+    hideSpinner();
+    showToast('Failed to load history','error');
+  }
+}
+
+function showHistDetail(h){
+  document.getElementById('histDetailBody').innerHTML = `
+    <div class="receipt-row"><span class="r-key">Date & Time</span><span class="r-val">${h.dateTime}</span></div>
+    <div class="receipt-row"><span class="r-key">Seller</span><span class="r-val">${h.sellerName}</span></div>
+    <div class="receipt-row"><span class="r-key">Customer ID</span><span class="r-val">${h.customerID}</span></div>
+    <div class="receipt-row"><span class="r-key">Status</span><span class="r-val"><span class="status-badge ${h.orderStatus.toLowerCase()==='success'?'status-success':'status-pending'}">${h.orderStatus.toUpperCase()}</span></span></div>
+    <div class="receipt-total" style="margin-top:12px;">
+      <div class="t-label">Diamonds Sent</div>
+      <div class="t-val">${parseInt(h.diamondAmount).toLocaleString()} 💎</div>
+    </div>`;
+  document.getElementById('histDetailModal').classList.add('open');
+}
+
+// ============================================================
+// ADMIN
+// ============================================================
+async function loadAdminData(){
+  showSpinner();
+  try{
+    const res = await apiCall({action:'getAllSellers'});
+    hideSpinner();
+    if(res.status==='success'){
+      adminSellers = res.sellers || [];
+      renderAdminStats();
+      renderSellers(adminSellers);
+    }
+  }catch(e){ hideSpinner(); showToast('Failed to load data','error'); }
+}
+
+function renderAdminStats(){
+  const totalBal = adminSellers.reduce((s,r)=>s+(Number(r.balance)||0),0);
+  document.getElementById('statSellers').textContent   = adminSellers.length;
+  document.getElementById('statTotalBal').textContent  = totalBal.toLocaleString();
+  // Orders & Diamonds — loaded from separate endpoint or just show —
+  document.getElementById('statOrders').textContent   = '—';
+  document.getElementById('statDiamonds').textContent = '—';
+}
+
+function filterSellers(){
+  const q = document.getElementById('adminSearch').value.trim();
+  if(!q){ renderSellers(adminSellers); return; }
+  const filtered = adminSellers.filter(s => String(s.mobile).includes(q));
+  renderSellers(filtered);
+}
+
+function renderSellers(list){
+  const wrap = document.getElementById('sellersList');
+  if(!list.length){
+    wrap.innerHTML = `<div class="no-orders"><i class="fas fa-search"></i><p>No seller found</p></div>`;
+    return;
+  }
+  wrap.innerHTML = list.map((s,i) => `
+    <div class="seller-row">
+      <div class="seller-avatar">👤</div>
+      <div class="seller-info">
+        <div class="seller-name">${s.name}</div>
+        <div class="seller-mobile">${s.mobile}</div>
+      </div>
+      <div class="seller-balance">${Number(s.balance).toLocaleString()} 💎</div>
+      <div class="seller-actions">
+        <button class="btn btn-gold btn-sm" onclick="openAddBal('${s.mobile}','${s.name}',${s.balance})">
+          <i class="fas fa-plus"></i> Add
+        </button>
+      </div>
+    </div>`).join('');
+}
+
+function openAddBal(mobile, name, balance){
+  currentAddBalMobile = mobile;
+  document.getElementById('addBalName').textContent    = name;
+  document.getElementById('addBalMobile').textContent  = mobile;
+  document.getElementById('addBalCurrent').textContent = Number(balance).toLocaleString();
+  document.getElementById('addBalAmt').value           = '';
+  document.getElementById('addBalPreview').textContent = Number(balance).toLocaleString()+' 💎';
+  document.getElementById('addBalSubtitle').textContent = name + "'s wallet";
+  document.getElementById('addBalModal').classList.add('open');
+  setTimeout(()=>document.getElementById('addBalAmt').focus(),300);
+}
+
+function updateAddBalPreview(){
+  const cur = Number(document.getElementById('addBalCurrent').textContent.replace(/,/g,''))||0;
+  const add = Number(document.getElementById('addBalAmt').value)||0;
+  const nw  = cur + add;
+  document.getElementById('addBalPreview').textContent = nw.toLocaleString()+' 💎';
+}
+
+async function submitAddBalance(){
+  const amt = Number(document.getElementById('addBalAmt').value);
+  if(!amt || amt <= 0){ showToast('Enter valid amount','error'); return; }
+  closeAddBalModal();
+  showSpinner();
+  try{
+    const res = await apiCall({
+      action : 'updateBalance',
+      mobile : currentAddBalMobile,
+      amount : amt
+    });
+    hideSpinner();
+    if(res.status==='success'){
+      showToast('Balance updated successfully! 💎','success');
+      // Update local data
+      const idx = adminSellers.findIndex(s=>s.mobile===currentAddBalMobile);
+      if(idx>=0) adminSellers[idx].balance = res.newBalance;
+      renderAdminStats();
+      filterSellers();
+    } else {
+      showToast(res.message||'Update failed','error');
+    }
+  }catch(e){ hideSpinner(); showToast('Connection error','error'); }
+}
+
+function closeAddBalModal(){ document.getElementById('addBalModal').classList.remove('open'); }
+
+// ============================================================
+// PIN HELPERS
+// ============================================================
+function setupPinInputs(){
+  const ids = ['p1','p2','p3','p4'];
+  ids.forEach((id,i)=>{
+    const el = document.getElementById(id);
+    el.addEventListener('input', ()=>{
+      el.value = el.value.replace(/\D/g,'');
+      if(el.value && i < ids.length-1) document.getElementById(ids[i+1]).focus();
+    });
+    el.addEventListener('keydown', e=>{
+      if(e.key==='Backspace' && !el.value && i>0) document.getElementById(ids[i-1]).focus();
+    });
+  });
+}
+function getPIN(){ return ['p1','p2','p3','p4'].map(id=>document.getElementById(id).value).join(''); }
+function clearPinInputs(){ ['p1','p2','p3','p4'].forEach(id=>{document.getElementById(id).value='';}); }
+function closePinModal(){ document.getElementById('pinModal').classList.remove('open'); }
+function closeReceiptModal(){ document.getElementById('receiptModal').classList.remove('open'); }
+
+// ============================================================
+// API HELPER
+// ============================================================
+async function apiCall(params){
+  const qs = new URLSearchParams(params).toString();
+  const url = API_URL + '?' + qs;
+  const res = await fetch(url, {redirect:'follow'});
+  return await res.json();
+}
+
+// ============================================================
+// UI HELPERS
+// ============================================================
+function setPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+function showSpinner(){ document.getElementById('spinner').classList.add('show'); }
+function hideSpinner(){ document.getElementById('spinner').classList.remove('show'); }
+function val(id){ return (document.getElementById(id).value||'').trim(); }
+
+let toastTimer;
+function showToast(msg, type='info'){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show '+type;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>{ t.classList.remove('show'); }, 3200);
+}
+
+// Close modals on overlay click
+document.querySelectorAll('.modal-overlay').forEach(overlay=>{
+  overlay.addEventListener('click', e=>{
+    if(e.target===overlay) overlay.classList.remove('open');
+  });
+});
+</script>
+</body>
+</html>
